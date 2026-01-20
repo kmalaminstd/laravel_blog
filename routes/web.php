@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RegisterController;
@@ -39,7 +41,11 @@ Route::get('/manage/analytics', function(){
     return view('manager.analytics');
 });
 
-// Route::get('/manage/comments', [PostsController::class, 'comments']);
+Route::post('/post/like/{posts}', [LikeController::class, 'togglePostLike']);
+
+Route::get('/public-profile/{user}/{name}', [UserController::class, 'publicprofile']);
+
+Route::post('/manage/comments/{posts}', [CommentsController::class, 'store']);
 
 Route::get('/manage/create-post', [PostsController::class, 'create'])->middleware('auth');
 Route::post('/manage/create-post', [PostsController::class, 'store'])->middleware('auth');

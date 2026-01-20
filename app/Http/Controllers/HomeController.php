@@ -13,7 +13,8 @@ class HomeController extends Controller
             ->with(['category', 'user'])
             ->get();
         
-        $latestPosts = Posts::latest()
+        $latestPosts = Posts::where('published', true)
+            ->latest()
             ->with('category')
             ->limit(4)
             ->get();

@@ -36,4 +36,12 @@ class Posts extends Model
         $this->tags()->detach($tagId);
     }
 
+    public function likes() {
+        return $this->hasMany(PostLike::class, 'posts_id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comments::class, 'posts_id');
+    }
+
 }

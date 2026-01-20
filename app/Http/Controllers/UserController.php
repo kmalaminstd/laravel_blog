@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth ;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -42,6 +43,25 @@ class UserController extends Controller
 
         return back()->with('success', 'Profile updated');
 
+    }
+
+    public function publicprofile(User $user, string $name){
+
+        $expectedname = Str::slug($user->name);
+
+        if($expectedname !== $name){
+            abort(404);
+        }
+
+        $posts = $user->posts()
+            ->where('published', true)
+            ->latest()
+            ->paginate(5);
+        
+        return view('manager.public-profile', [
+            "posts" => $posts,
+            "user" => $user
+        ]);
     }
     
 }

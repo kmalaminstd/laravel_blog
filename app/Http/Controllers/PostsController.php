@@ -25,7 +25,7 @@ class PostsController extends Controller
         if($request->query('sort') === 'published'){
             $query->where('published', true);
         }
-
+ 
         if($request->query('sort') === 'draft'){
             $query->where('published', false);
         }
@@ -47,6 +47,15 @@ class PostsController extends Controller
         return view('blogs.all-blogs', [
             "posts" => $posts
         ]);
+    }
+
+    public function userposts(User $user){
+        $posts = $user->posts()
+            ->where('published', true)
+            ->latest()
+            ->paginate(5);
+        
+        return view();
     }
 
     /**
@@ -118,6 +127,11 @@ class PostsController extends Controller
      */
     public function edit(Posts $post)
     {
+
+        if(Auth::user() || Auth::id() !== $post->user_id){
+            abort(403);
+        }
+
         $categories = Categories::all();
         return view('manager.post-edit', ['post' => $post, "categories" => $categories]);
     }

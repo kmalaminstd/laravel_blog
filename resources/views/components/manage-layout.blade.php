@@ -29,13 +29,13 @@
             <a href="/manage" class="flex items-center gap-3 bg-blue-50 text-blue-600 px-4 py-3 rounded-xl font-semibold">
                 <i class="fa-solid fa-house"></i> Dashboard
             </a>
-            <a href="./manage/posts" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+            <a href="/manage/posts" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
                 <i class="fa-solid fa-file-lines"></i> My Posts
             </a>
-            <a href="./manage/analytics" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+            <a href="/manage/analytics" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
                 <i class="fa-solid fa-chart-line"></i> Analytics
             </a>
-            <a href="./manage/comments" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+            <a href="/manage/comments" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
                 <i class="fa-solid fa-comment"></i> Comments
             </a>
         </nav>

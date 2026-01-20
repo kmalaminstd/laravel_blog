@@ -9,4 +9,14 @@ class comments extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentsFactory> */
     use HasFactory;
+
+    protected $fillable = ['user_id', 'posts_id', 'text'];
+
+    public function post(){
+        return $this->belongsTo(Posts::class, 'posts_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

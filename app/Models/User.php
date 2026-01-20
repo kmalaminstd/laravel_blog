@@ -35,6 +35,14 @@ class User extends Authenticatable
         return $this->hasMany(Posts::class);
     }
 
+    public function postLikes() {
+        return $this->hasMany(PostLike::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comments::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
