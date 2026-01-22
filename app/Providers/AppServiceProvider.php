@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Comments;
 use App\Models\Posts;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('edit-post', function(User $user, Posts $posts){
             return $posts->user()->is($user);
+        });
+
+        Gate::define('delete-comment', function(User $user, Comments $comments){
+            return $comments->user()->is($user);
         });
     }
 }

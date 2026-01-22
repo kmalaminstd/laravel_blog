@@ -45,7 +45,7 @@
                         @if (auth()->id() !== $post->user->id )
                             <form action="/follow/{{$post->user->id}}" method="POST">
                                 @csrf
-                                <button class="text-xs font-bold text-blue-600 hover:text-blue-800">{{ $post->user->followers()->where('follower_id', Auth::id())->exists() ? 'Following' : Follow }}</button>
+                                <button class="text-xs font-bold text-blue-600 hover:text-blue-800">{{ $post->user->followers()->where('follower_id', Auth::id())->exists() ? 'Following' : 'Follow' }}</button>
                             </form>
                         @endif
                         </div>
@@ -99,7 +99,9 @@
                     @foreach ($post->comments as $comment)
                         
                         <div class="flex gap-4">
-                            <img src="{{ $comment->user->logo ? asset('storage/' . $comment->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
+                            <a href="/{{ Auth::id() === $comment->user->id ? 'manage/profile' : 'public-profile' }}/{{  Auth::id() !== $comment->user->id ?$comment->user->id : '' }}{{ Auth::id() !== $comment->user->id ? '/' . Str::slug($comment->user->name) : '' }}">
+                                <img src="{{ $comment->user->logo ? asset('storage/' . $comment->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
+                            </a>
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <h4 class="font-bold text-sm">{{ $comment->user->name }}</h4>
@@ -108,6 +110,13 @@
                                 <p class="text-sm text-gray-600">
                                     {{$comment->text}}
                                 </p>
+                                <div>
+                                    <form action="/comment/delete/{{ $comment->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 

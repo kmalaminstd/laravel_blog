@@ -46,7 +46,9 @@ Route::post('/post/like/{posts}', [LikeController::class, 'togglePostLike']);
 
 Route::get('/public-profile/{user}/{name}', [UserController::class, 'publicprofile']);
 
+// comments
 Route::post('/manage/comments/{posts}', [CommentsController::class, 'store']);
+Route::delete('/comment/delete/{comments}', [CommentsController::class, 'destroy'])->can('delete-comment', 'comments');
 
 Route::get('/manage/create-post', [PostsController::class, 'create'])->middleware('auth');
 Route::post('/manage/create-post', [PostsController::class, 'store'])->middleware('auth');

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\comments;
+
 use App\Http\Requests\StorecommentsRequest;
 use App\Http\Requests\UpdatecommentsRequest;
+use App\Models\Comments;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ class CommentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(comments $comments)
+    public function show(Comments $comments)
     {
         //
     }
@@ -55,7 +56,7 @@ class CommentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(comments $comments)
+    public function edit(Comments $comments)
     {
         //
     }
@@ -63,7 +64,7 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecommentsRequest $request, comments $comments)
+    public function update(UpdatecommentsRequest $request, Comments $comments)
     {
         //
     }
@@ -71,8 +72,10 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(comments $comments)
+    public function destroy(Comments $comments)
     {
-        //
+        $comments->delete();
+
+        return back();
     }
 }
