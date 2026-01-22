@@ -68,8 +68,12 @@
                                         
                                         <a href="{{ '/manage/post-edit/'. $post->id }}" class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
                                         
-                                        <button class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete"><i class="fa-solid fa-trash"></i></button>
-                                        <button class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <form action="/post/delete/{{ $post->id }}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button class="p-2 text-gray-400 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
+                                        </form>
+                                        
                                     </div>
                                 </td>
                             </tr>

@@ -51,9 +51,13 @@
                                 <td class="px-6 py-4 text-sm text-gray-500">
                                     {{ $post->created_at->format('M d, Y') }}
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
+                                <td class="px-6 py-4 text-right space-x-2 flex">
                                     <a href="{{ 'manage/post-edit/'. $post->id }}" class="p-2 text-gray-400 hover:text-blue-600"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <button class="p-2 text-gray-400 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
+                                    <form action="/post/delete/{{ $post->id }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button class="p-2 text-gray-400 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

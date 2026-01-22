@@ -146,7 +146,7 @@ class PostsController extends Controller
      */
     public function update(Posts $posts, Request $request)
     {
-        // dd(reques)
+
 
         $attributes = request()->validate([
             "title" => ['required', 'min:3'],
@@ -197,7 +197,12 @@ class PostsController extends Controller
      */
     public function destroy(Posts $posts)
     {
-        //
+
+        // $this->authorize('delete', $posts);
+
+        $posts->delete();
+
+        return back();
     }
 
     public function published() {

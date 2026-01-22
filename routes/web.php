@@ -50,11 +50,12 @@ Route::post('/manage/comments/{posts}', [CommentsController::class, 'store']);
 
 Route::get('/manage/create-post', [PostsController::class, 'create'])->middleware('auth');
 Route::post('/manage/create-post', [PostsController::class, 'store'])->middleware('auth');
+Route::delete('/post/delete/{posts}', [PostsController::class, 'destroy'])->middleware('auth')->can('delete-post', 'posts');
 
 Route::get('/manage/posts', [PostsController::class, 'index'])->middleware('auth');
 
-Route::get('/manage/post-edit/{post}', [PostsController::class, 'edit'])->middleware('auth');
-Route::patch('/posts/{posts}', [PostsController::class, 'update']);
+Route::get('/manage/post-edit/{post}', [PostsController::class, 'edit'])->middleware('auth')->can('edit-post', 'post');
+Route::patch('/posts/{posts}', [PostsController::class, 'update'])->can('edit-post', 'posts');
 
 // follower
 Route::post('/follow/{user}', [UserFollowerController::class, 'store']);
