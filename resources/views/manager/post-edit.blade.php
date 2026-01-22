@@ -6,17 +6,16 @@
                 <h2 class="text-2xl font-bold text-gray-800">Edit Post</h2>
                 <p class="text-sm text-gray-500">Update your content and publishing settings</p>
             </div>
-            <div class="flex gap-3">
-                <button type="submit" value="draft" name="action" form="blogEditForm" class="action px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-xl font-semibold transition">Draft</button>
-                <button type="submit" value="publish" name="action" form="blogEditForm" class="action px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-200 transition">Publish</button>
-            </div>
+            
         </div>
 
         <form id="blogEditForm" class="p-8 space-y-8" method="POST" action="/posts/{{ $post['id'] }}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-
-            <input name="action" id="postAction" value="" hidden />
+            <div class="flex gap-3">
+                <button type="submit" value="draft" name="action" form="blogEditForm" class="action px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-xl font-semibold transition">Draft</button>
+                <button type="submit" value="publish" name="action" form="blogEditForm" class="action px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-200 transition">Publish</button>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-2">

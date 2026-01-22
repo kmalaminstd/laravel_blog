@@ -37,15 +37,22 @@
             </h1>
 
             <div class="flex items-center gap-4 mb-10 pb-10 border-b border-gray-100">
-                <img src="{{ $post->user->logo ? asset('storage/'. $post->user->logo) : 'images/user.png' }}" class="w-12 h-12 rounded-full object-cover">
+                <img src="{{ $post->user->logo ? asset('storage/'. $post->user->logo) : asset('images/user.png') }}" class="w-12 h-12 rounded-full object-cover">
+
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-bold text-gray-900">{{ $post->user->name }}</span>
-                        <button class="text-xs font-bold text-blue-600 hover:text-blue-800">Follow</button>
+                        <a href="/{{ Auth::id() === $post->user->id ? 'manage/profile' : 'public-profile' }}/{{  Auth::id() !== $post->user->id ?$post->user->id : '' }}{{ Auth::id() !== $post->user->id ? '/' . Str::slug($post->user->name) : '' }}" class="font-bold text-gray-900">{{ $post->user->name }}</a>
+                        @if (auth()->id() !== $post->user->id )
+                            <form action="/follow/{{$post->user->id}}" method="POST">
+                                @csrf
+                                <button class="text-xs font-bold text-blue-600 hover:text-blue-800">{{ $post->user->followers()->where('follower_id', Auth::id())->exists() ? 'Following' : Follow }}</button>
+                            </form>
+                        @endif
+                        </div>
+                        <p class="text-xs text-gray-500">Published {{ $post->created_at->format('D m, y') }}</p>
                     </div>
-                    <p class="text-xs text-gray-500">Published {{ $post->created_at->format('D m, y') }}</p>
+                    
                 </div>
-            </div>
 
             <figure class="mb-10">
                 <img src="{{ asset('storage/'.$post->image) }}" class="rounded-3xl w-full shadow-lg">
@@ -67,7 +74,11 @@
             </div>
 
             <section class="border-t border-gray-100 pt-12" id="comments">
-                <h3 class="text-2xl font-bold text-gray-900 mb-8">Comments (14)</h3>
+                <div class="flex gap-10">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Comments ({{ $post->comments->count() }})</h3>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Likes ({{ $post->likes()->count() }})</h3>
+                </div>
 
                 <div class="flex gap-4 mb-10">
                     <img src="{{ $post->user->logo ? asset('/storage' . $post->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
@@ -85,19 +96,22 @@
                 </div>
 
                 <div class="space-y-8">
-                    <div class="flex gap-4">
-                        <img src="https://i.pravatar.cc/100?u=user2" class="w-10 h-10 rounded-full shrink-0">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <h4 class="font-bold text-sm">Sarah Jenkins</h4>
-                                <span class="text-xs text-gray-400">2 days ago</span>
+                    @foreach ($post->comments as $comment)
+                        
+                        <div class="flex gap-4">
+                            <img src="{{ $comment->user->logo ? asset('storage/' . $comment->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h4 class="font-bold text-sm">{{ $comment->user->name }}</h4>
+                                    <span class="text-xs text-gray-400">{{ $comment->created_at->format('d M, Y') }}</span>
+                                </div>
+                                <p class="text-sm text-gray-600">
+                                    {{$comment->text}}
+                                </p>
                             </div>
-                            <p class="text-sm text-gray-600">This is exactly what I've been seeing in my latest
-                                projects. The efficiency gain is real, but I still worry about unique brand identity.
-                            </p>
-                            <button class="text-xs font-bold text-gray-400 mt-2 hover:text-blue-600">Reply</button>
                         </div>
-                    </div>
+
+                    @endforeach
                 </div>
             </section>
         </article>
@@ -131,4 +145,5 @@
             </div>
         </aside>
     </main>
+    
 </x-home-layout>

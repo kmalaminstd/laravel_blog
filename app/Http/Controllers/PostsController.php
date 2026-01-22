@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+// use Carbon\Carbon;
 
 class PostsController extends Controller
 {
@@ -34,16 +36,22 @@ class PostsController extends Controller
 
         $posts = $query->latest()->paginate(5);
 
-        return view('manager.posts', ['posts' => $posts, 'request' => $request]);
+        $count = Auth::user()->posts()
+            ->where('published', true)
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+
+        return view('manager.posts', ['posts' => $posts, 'request' => $request, 'currentMonthPost' => $count]);
     }
 
     public function allBlogs () {
-
+        
         $posts = Posts::where('published', true)
             ->with(['category', 'user'])
             ->latest()
             ->paginate(5);
-
+        // dd($posts);
         return view('blogs.all-blogs', [
             "posts" => $posts
         ]);
@@ -128,9 +136,6 @@ class PostsController extends Controller
     public function edit(Posts $post)
     {
 
-        if(Auth::user() || Auth::id() !== $post->user_id){
-            abort(403);
-        }
 
         $categories = Categories::all();
         return view('manager.post-edit', ['post' => $post, "categories" => $categories]);
@@ -141,18 +146,21 @@ class PostsController extends Controller
      */
     public function update(Posts $posts, Request $request)
     {
-    
+        // dd(reques)
 
         $attributes = request()->validate([
             "title" => ['required', 'min:3'],
             "categories_id" => ['required', 'exists:categories,id'],
             "image" => ['nullable', 'image'],
             "tags" => ['nullable'],
-            "description" => ['required', 'min:10']
+            "description" => ['required', 'min:10'],
+            "action" => ['required', Rule::in(['draft', 'publish'])]
         ]);
 
 
         $action = $request->action;
+
+        // dd($action);
 
         if($action === 'draft'){
             $attributes['published'] = false;
@@ -167,7 +175,7 @@ class PostsController extends Controller
                 $posts->tag($tag);
             }
         }
-
+        // dd($attributes['action']);
         if(request()->file('image')){
 
             if($posts->image){
@@ -178,7 +186,7 @@ class PostsController extends Controller
 
         }
 
-        $posts->update(Arr::except($attributes, ['tags']));
+        $posts->update(Arr::except($attributes, ['tags', 'action']));
 
         return redirect("/blog/$posts->id");
 

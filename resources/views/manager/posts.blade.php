@@ -2,7 +2,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 px-4 mt-4">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">My Posts</h1>
-                <p class="text-gray-500 text-sm">You have published 12 stories this month.</p>
+                <p class="text-gray-500 text-sm">You have published {{ $currentMonthPost }} stories this month.</p>
             </div>
             <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Create New Post
@@ -65,7 +65,9 @@
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        
+                                        <a href="{{ '/manage/post-edit/'. $post->id }}" class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        
                                         <button class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete"><i class="fa-solid fa-trash"></i></button>
                                         <button class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     </div>

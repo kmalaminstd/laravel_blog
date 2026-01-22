@@ -20,7 +20,7 @@
 
         @foreach ($posts as $post)
             
-            
+            <x-article-wide :post=$post />
 
         @endforeach
 

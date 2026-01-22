@@ -13,10 +13,10 @@
             <p class="text-white max-w-2xl mb-4 line-clamp-2 feat_short_desc">
                 {!! Str::words($featuredPost->description, 20, '...') !!}
             </p>
-            <div class="flex items-center gap-3 text-white text-sm">
+            <a href="/{{ Auth::id() === $featuredPost->user->id ? 'manage/profile' : 'public-profile' }}/{{  Auth::id() !== $featuredPost->user->id ?$featuredPost->user->id : '' }}{{ Auth::id() !== $featuredPost->user->id ? '/' . Str::slug($featuredPost->user->name) : '' }}" class="flex items-center gap-3 text-white text-sm">
                 <img src="{{ $featuredPost->user->logo ? asset( 'storage/'. $featuredPost->user->logo): 'images/user.png' }}" class="w-8 h-8 rounded-full border-2 border-white">
                 <span> {{ $featuredPost->user->name }} </span>
-            </div>
+            </a>
         </div>
     </div>
 </section>

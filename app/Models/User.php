@@ -43,6 +43,14 @@ class User extends Authenticatable
         return $this->hasMany(Comments::class);
     }
 
+    public function followers(){
+        return $this->hasMany(UserFollower::class);
+    }
+
+    public function countFollowers(){
+        return $this->followers()->count();
+    }
+
     /**
      * Get the attributes that should be cast.
      *

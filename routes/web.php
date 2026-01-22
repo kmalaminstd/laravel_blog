@@ -11,6 +11,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserFollowerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -52,8 +53,11 @@ Route::post('/manage/create-post', [PostsController::class, 'store'])->middlewar
 
 Route::get('/manage/posts', [PostsController::class, 'index'])->middleware('auth');
 
-Route::get('/manage/post-edit/{post}', [PostsController::class, 'edit'])->middleware('auth')->name('posts.edit');
+Route::get('/manage/post-edit/{post}', [PostsController::class, 'edit'])->middleware('auth');
 Route::patch('/posts/{posts}', [PostsController::class, 'update']);
+
+// follower
+Route::post('/follow/{user}', [UserFollowerController::class, 'store']);
 
 Route::get('/manage/profile', [UserController::class, 'index'])->middleware('auth');
 Route::put('/manage/profile/{user}', [UserController::class, 'update'])->middleware('auth');

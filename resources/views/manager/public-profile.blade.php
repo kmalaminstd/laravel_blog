@@ -28,10 +28,18 @@
                     </div>
 
                     <div class="flex gap-3 mb-2">
-                        <button
-                            class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100 flex items-center gap-2">
-                            <i class="fa-solid fa-plus text-sm"></i> Follow
-                        </button>
+                        <form method="POST" action="/follow/{{ $user->id }}">
+                            @csrf
+                            <button class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100 flex items-center gap-2">
+
+                                @if ($user->followers()->where('follower_id', Auth::id())->exists())
+                                    <i class="fa-solid fa-bell"></i> Following
+                                @else
+                                    <i class="fa-solid fa-plus text-sm"></i> Follow
+                                @endif
+                                
+                            </button>
+                        </form>
                         <button class="p-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-gray-600">
                             <i class="fa-solid fa-share-nodes"></i>
                         </button>
