@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Posts;
 use App\Http\Requests\UpdatePostsRequest;
+use App\Mail\NewsletterPost;
 use App\Models\Categories;
+use App\Models\Newsletter;
 use App\Models\Tags;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 // use Carbon\Carbon;
@@ -42,7 +45,13 @@ class PostsController extends Controller
             ->whereYear('created_at', now()->year)
             ->count();
 
-        return view('manager.posts', ['posts' => $posts, 'request' => $request, 'currentMonthPost' => $count]);
+        return view('manager.posts', 
+            [   
+                'posts' => $posts, 
+                'request' => $request, 
+                'currentMonthPost' => $count
+            ]
+        );
     }
 
     public function allBlogs () {
@@ -85,10 +94,11 @@ class PostsController extends Controller
         // dd($request);
 
         $attributes = $request->validate([
-            "title" => ['required', 'min:10'],
+            "title" => ['required', 'min:10', 'max-:255'],
             "description" => ['required', 'min:10'],
             "categories_id" => ['required', 'exists:categories,id'],
-            "tags" => ["nullable"]
+            "tags" => ["nullable"],
+            "image" => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
         ]);
 
         $attributes['image'] = $request->file('image')->store('blog_image', 'public');
@@ -112,6 +122,14 @@ class PostsController extends Controller
             }
         }
 
+        Newsletter::where('email', '!=', Auth::user()->email)->chunk(100, function($emails) use ($post){
+            foreach($emails as $email){
+                Mail::to($email->email)
+                    ->queue(new NewsletterPost($post));
+            };
+        });
+
+
         return redirect("/manage/posts");
     }
 
@@ -126,8 +144,11 @@ class PostsController extends Controller
      */
     public function show(Posts $posts)
     {
-        // dd($posts);
-        return view('blogs.blog', ["post" => $posts]);
+        
+        $relatedPosts = $posts->user->posts()
+            ->where('id', '!=', $posts->id)->take(4)->get();
+
+        return view('blogs.blog', ["post" => $posts, 'relatedPosts' => $relatedPosts]);
     }
 
     /**

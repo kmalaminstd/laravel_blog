@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ManageController;
+use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
@@ -64,3 +65,7 @@ Route::post('/follow/{user}', [UserFollowerController::class, 'store']);
 
 Route::get('/manage/profile', [UserController::class, 'index'])->middleware('auth');
 Route::put('/manage/profile/{user}', [UserController::class, 'update'])->middleware('auth');
+
+// newsletter controller
+Route::post('/newsletter', [NewsLetterController::class, 'store']);
+Route::post('/newsletter/unsubscibe/{newsletter:unsubscribe_token}', [NewsLetterController::class, 'destroy']);

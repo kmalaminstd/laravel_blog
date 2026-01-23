@@ -127,19 +127,16 @@
 
         <aside class="lg:w-80 space-y-12">
             <div>
-                <h3 class="font-bold text-gray-900 mb-6 pb-2 border-b-2 border-blue-600 inline-block">More from Alex
-                    Rivera</h3>
+                <h3 class="font-bold text-gray-900 mb-6 pb-2 border-b-2 border-blue-600 inline-block">More from {{ $post->user->name }} </h3>
                 <div class="space-y-6">
-                    <a href="#" class="group block">
-                        <h4 class="font-bold text-gray-800 group-hover:text-blue-600 transition mb-1 leading-snug">The
-                            10 Best VS Code Extensions for 2026</h4>
-                        <span class="text-xs text-gray-400">5 min read</span>
-                    </a>
-                    <a href="#" class="group block">
-                        <h4 class="font-bold text-gray-800 group-hover:text-blue-600 transition mb-1 leading-snug">
-                            Mastering CSS Container Queries</h4>
-                        <span class="text-xs text-gray-400">12 min read</span>
-                    </a>
+
+                    @foreach ($relatedPosts as $relPost)
+                        <a href="/blog/{{ $relPost->id }}" class="group block">
+                            <h4 class="font-bold text-gray-800 group-hover:text-blue-600 transition mb-1 leading-snug"> {{ $relPost->title }} </h4>
+                            <span class="text-xs text-gray-400"> {{ $relPost->created_at->format('M d, Y') }} </span>
+                        </a>
+                    @endforeach
+                    
                 </div>
             </div>
 

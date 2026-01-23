@@ -19,7 +19,7 @@
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                 <h3 class="font-bold text-gray-800">Recent Posts</h3>
-                <button class="text-blue-600 text-sm font-bold">View All</button>
+                <a href="/manage/posts" class="text-blue-600 text-sm font-bold">View All</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">

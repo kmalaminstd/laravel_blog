@@ -1,12 +1,14 @@
 <x-manage-layout>
+    <div class="px-5">
+
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 px-4 mt-4">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">My Posts</h1>
                 <p class="text-gray-500 text-sm">You have published {{ $currentMonthPost }} stories this month.</p>
             </div>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+            <a href="/manage/create-post" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Create New Post
-            </button>
+            </a>
         </div>
 
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm mb-6">
@@ -89,4 +91,6 @@
 
             {{ $posts->links() }}
         </div>
+
+    </div>
 </x-manage-layout>

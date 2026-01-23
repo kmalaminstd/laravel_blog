@@ -36,11 +36,11 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-3">Popular Tags</h3>
                         <div class="flex flex-wrap gap-2">
-                            <a href="#" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#Javascript</a>
-                            <a href="#" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#Tailwind</a>
-                            <a href="#" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#UIUX</a>
-                            <a href="#" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#Writing</a>
-                            <a href="#" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#Career</a>
+
+                            @foreach ($tags as $tag)                                
+                                <a href="/tags/{{ strtolower($tag->name) }}" class="bg-gray-200 hover:bg-blue-100 hover:text-blue-600 text-gray-600 px-3 py-1.5 rounded-lg text-sm transition">#{{ $tag->name }}</a>
+                            @endforeach
+                          
                         </div>
                     </div>
                 </aside>
@@ -53,7 +53,7 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h2 class="text-2xl font-bold text-gray-800">Featured Creators</h2>
+                <h2 class="text-2xl font-bold text-gray-800">Top Contributors</h2>
                 <p class="text-gray-500 text-sm">Meet the voices shaping the community</p>
             </div>
             <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1">
@@ -62,41 +62,11 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center hover:shadow-lg transition duration-300">
-                <img src="https://i.pravatar.cc/150?u=1" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-blue-50">
-                <h4 class="font-bold text-gray-800 text-lg">Sarah Jenkins</h4>
-                <p class="text-gray-500 text-sm mb-4">Tech Architect</p>
-                <button class="text-blue-600 text-sm font-bold hover:bg-blue-50 w-full py-2 rounded-lg border border-blue-100 transition">
-                    Follow
-                </button>
-            </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center hover:shadow-lg transition duration-300">
-                <img src="https://i.pravatar.cc/150?u=2" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-blue-50">
-                <h4 class="font-bold text-gray-800 text-lg">Marcus Chen</h4>
-                <p class="text-gray-500 text-sm mb-4">UX Designer</p>
-                <button class="text-blue-600 text-sm font-bold hover:bg-blue-50 w-full py-2 rounded-lg border border-blue-100 transition">
-                    Follow
-                </button>
-            </div>
+            @foreach ($creators as $creator)
+                <x-creator :creator="$creator" />
+            @endforeach
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center hover:shadow-lg transition duration-300">
-                <img src="https://i.pravatar.cc/150?u=3" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-blue-50">
-                <h4 class="font-bold text-gray-800 text-lg">Elena Rose</h4>
-                <p class="text-gray-500 text-sm mb-4">Growth Lead</p>
-                <button class="text-blue-600 text-sm font-bold hover:bg-blue-50 w-full py-2 rounded-lg border border-blue-100 transition">
-                    Follow
-                </button>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center hover:shadow-lg transition duration-300">
-                <img src="https://i.pravatar.cc/150?u=4" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-blue-50">
-                <h4 class="font-bold text-gray-800 text-lg">David Vogt</h4>
-                <p class="text-gray-500 text-sm mb-4">Fullstack Dev</p>
-                <button class="text-blue-600 text-sm font-bold hover:bg-blue-50 w-full py-2 rounded-lg border border-blue-100 transition">
-                    Follow
-                </button>
-            </div>
         </div>
     </section>
 </x-home-layout>
