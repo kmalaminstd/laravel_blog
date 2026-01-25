@@ -51,6 +51,14 @@ class User extends Authenticatable
         return $this->followers()->count();
     }
 
+    public function saveposts(){
+        return $this->hasMany(Savepost::class);
+    }
+
+    public function savedposts(){
+        return $this->belongsToMany(Posts::class, 'saveposts', 'user_id', 'posts_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

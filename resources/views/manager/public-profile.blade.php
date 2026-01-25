@@ -17,11 +17,11 @@
 
                         <div class="flex gap-6 mt-4">
                             <div class="text-center md:text-left">
-                                <span class="block text-xl font-bold text-gray-900">1.2k</span>
+                                <span class="block text-xl font-bold text-gray-900">{{ $user->followers()->count() }}</span>
                                 <span class="text-xs text-gray-400 uppercase font-bold tracking-widest">Followers</span>
                             </div>
                             <div class="text-center md:text-left">
-                                <span class="block text-xl font-bold text-gray-900">48</span>
+                                <span class="block text-xl font-bold text-gray-900">{{ $user->posts()->where('published', true)->count() }}</span>
                                 <span class="text-xs text-gray-400 uppercase font-bold tracking-widest">Blogs</span>
                             </div>
                         </div>
@@ -77,10 +77,11 @@
         <div class="max-w-4xl">
             <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
                 Published Stories
-                <span class="text-sm font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">48</span>
+                <span class="text-sm font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{{ $user->posts()->where('published', true)->count() }}</span>
             </h2>
 
             <div class="space-y-8">
+                
                 @foreach ($posts as $post)
                     
                     <x-article-wide :post="$post" />

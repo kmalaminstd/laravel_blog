@@ -56,7 +56,7 @@
                 <h2 class="text-2xl font-bold text-gray-800">Top Contributors</h2>
                 <p class="text-gray-500 text-sm">Meet the voices shaping the community</p>
             </div>
-            <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1">
+            <a href="/creators" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1">
                 View all <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>

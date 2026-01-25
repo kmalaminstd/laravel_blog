@@ -23,9 +23,9 @@
             </p>
         </div>
         <div class="flex items-center justify-between">
-            <a href="/public-profile/{{ $post->user->id }}/{{ Str::slug($post->user->name) }}"
+            <a href="/{{ Auth::id() === $post->user->id ? 'manage/profile' : 'public-profile' }}/{{  Auth::id() !== $post->user->id ?$post->user->id : '' }}{{ Auth::id() !== $post->user->id ? '/' . Str::slug($post->user->name) : '' }}"
                 class="flex items-center gap-2">
-                <img src=" {{ asset('storage/' . $post->user->logo) }} " class="w-6 h-6 rounded-full">
+                <img src=" {{ $post->user->logo ? asset('storage/' . $post->user->logo) : asset('images/user.png') }} " class="w-6 h-6 rounded-full">
                 <span class="text-xs font-medium text-gray-700"> {{ $post->user->name }} </span>
             </a>
             <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 8 min read</span>

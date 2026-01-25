@@ -37,7 +37,7 @@ class PostsController extends Controller
 
         // dd($posts);
 
-        $posts = $query->latest()->paginate(5);
+        $posts = $query->latest()->with(['category'])->paginate(5);
 
         $count = Auth::user()->posts()
             ->where('published', true)
@@ -56,11 +56,27 @@ class PostsController extends Controller
 
     public function allBlogs () {
         
-        $posts = Posts::where('published', true)
-            ->with(['category', 'user'])
-            ->latest()
-            ->paginate(5);
-        // dd($posts);
+        $query = Posts::where('published', true)
+            ->with(['category', 'user']);
+
+        switch(request('q')){
+            case 'oldest':
+                $query->oldest();
+                break;
+
+            case 'popular':
+                $query->withCount('likes', 'comments')->orderByRaw('(likes_count + comments_count) DESC');
+                break;
+
+            case 'newest':
+            default:
+               $query->oldest();
+                break; 
+
+        }
+
+        $posts = $query->paginate(5);
+        
         return view('blogs.all-blogs', [
             "posts" => $posts
         ]);
@@ -146,7 +162,7 @@ class PostsController extends Controller
     {
         
         $relatedPosts = $posts->user->posts()
-            ->where('id', '!=', $posts->id)->take(4)->get();
+            ->where('id', '!=', $posts->id)->with(['category'])->take(4)->get();
 
         return view('blogs.blog', ["post" => $posts, 'relatedPosts' => $relatedPosts]);
     }
@@ -228,5 +244,9 @@ class PostsController extends Controller
 
     public function published() {
         return Auth::user()->posts()->get(['published']);
+    }
+
+    public function save(Posts $posts){
+        return Auth::user()->savepo;
     }
 }

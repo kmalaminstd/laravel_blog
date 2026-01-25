@@ -42,5 +42,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('user-follow', function(User $user, User $creator){
             return $user->id !== $creator->id;
         });
+
+        // Gate::define('like-post', function)
     }
 }

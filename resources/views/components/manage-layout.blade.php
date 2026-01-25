@@ -35,8 +35,14 @@
             <a href="/manage/analytics" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
                 <i class="fa-solid fa-chart-line"></i> Analytics
             </a>
-            <a href="/manage/comments" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
-                <i class="fa-solid fa-comment"></i> Comments
+            <a href="/manage/saved-post" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+                <i class="fa-solid fa-bookmark"></i> Saved
+            </a>
+            <a href="/manage/following" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+                <i class="fa-solid fa-user-check"></i> Following
+            </a>
+            <a href="/manage/followers" class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 px-4 py-3 rounded-xl transition">
+                <i class="fa-solid fa-users"></i> Followers
             </a>
         </nav>
 

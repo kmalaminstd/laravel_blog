@@ -44,5 +44,8 @@ class Posts extends Model
         return $this->hasMany(Comments::class, 'posts_id');
     }
 
+    public function saveByUser(){
+        return $this->belongsToMany(User::class);
+    }
 
 }

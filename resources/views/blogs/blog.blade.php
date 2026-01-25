@@ -3,28 +3,41 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row gap-12">
 
         <aside class="hidden lg:flex flex-col gap-6 sticky top-28 h-fit">
+            @auth
+                
+                <form action="/post/like/{{ $post->id }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition group">
+                        @if ($post->likes()->where('user_id', auth()->id())->exists())
+                            <i class="fa-classic fa-solid fa-heart text-red-500"></i>
+                        @else
+                            <i class="fa-regular fa-heart"></i>
+                        @endif
+                        
+                        <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Like</span>
+                    </button>
+                </form>
 
-            <form action="/post/like/{{ $post->id }}" method="POST">
-                @csrf
-                <button type="submit" class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition group">
-                    @if ($post->likes()->where('user_id', auth()->id())->exists())
-                        <i class="fa-classic fa-solid fa-heart text-red-500"></i>
-                    @else
-                        <i class="fa-regular fa-heart"></i>
-                    @endif
-                    
-                    <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Like</span>
+                <button class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition group">
+                    <i class="fa-regular fa-comment"></i>
+                    <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Comment</span>
                 </button>
-            </form>
 
-            <button class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition group">
-                <i class="fa-regular fa-comment"></i>
-                <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Comment</span>
-            </button>
-            <button class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-gray-50 hover:text-gray-900 transition group">
-                <i class="fa-regular fa-bookmark"></i>
-                <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Save</span>
-            </button>
+                <form action="/savepost/{{ $post->id }}" method="POST">
+                    @csrf
+                    <button class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center hover:bg-gray-50 hover:text-gray-900 transition group">
+                        @if(Auth::user()->saveposts()->where('posts_id', $post->id)->exists())
+                            <i class="fa-solid fa-bookmark"></i>
+                            <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Save</span>
+                        @else
+                            <i class="fa-regular fa-bookmark"></i>
+                            <span class="absolute ml-16 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100">Save</span>
+                        @endif
+                    </button>
+                </form>
+
+            @endauth
+
         </aside>
 
         <article class="flex-1 max-w-3xl mx-auto">
@@ -80,20 +93,28 @@
                     <h3 class="text-2xl font-bold text-gray-900 mb-8">Likes ({{ $post->likes()->count() }})</h3>
                 </div>
 
-                <div class="flex gap-4 mb-10">
-                    <img src="{{ $post->user->logo ? asset('/storage' . $post->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
-                    <div class="flex-1">
-                        <form method="post" action="/manage/comments/{{ $post->id }}">
-                            @csrf
-                            <textarea name="text" placeholder="What are your thoughts?"
-                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm outline-none focus:ring-2 focus:ring-blue-500 h-24 transition resize-none"></textarea>
-                            <div class="flex justify-end mt-2">
-                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-700 transition">Post
-                                    Comment</button>
-                            </div>
-                        </form>
+                @auth
+                    <div class="flex gap-4 mb-10">
+                        <img src="{{ $post->user->logo ? asset('/storage' . $post->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
+                        <div class="flex-1">
+                            <form method="post" action="/manage/comments/{{ $post->id }}">
+                                @csrf
+                                <textarea name="text" placeholder="What are your thoughts?"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm outline-none focus:ring-2 focus:ring-blue-500 h-24 transition resize-none"></textarea>
+                                <div class="flex justify-end mt-2">
+                                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-700 transition">Post
+                                        Comment</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endauth
+
+                @guest
+                    <div class="mb-5">
+                        <h4>Login to react or comment on post</h4>
+                    </div>
+                @endguest
 
                 <div class="space-y-8">
                     @foreach ($post->comments as $comment)
@@ -110,13 +131,17 @@
                                 <p class="text-sm text-gray-600">
                                     {{$comment->text}}
                                 </p>
-                                <div>
-                                    <form action="/comment/delete/{{ $comment->id }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
-                                    </form>
-                                </div>
+                                @auth
+                                    @can('delete-comment', $comment)
+                                        <div>
+                                            <form action="/comment/delete/{{ $comment->id }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                            </form>
+                                        </div>
+                                    @endcan
+                                @endauth
                             </div>
                         </div>
 
