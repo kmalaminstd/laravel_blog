@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\CreatorController;
@@ -98,4 +99,23 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::delete('/logout', [SessionsController::class, 'destroy']);
+});
+
+
+// ========================= = Admin routes = ===============
+
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
+
+    Route::get('/', [AdminController::class, 'index']);
+
+    Route::get('/users', [AdminController::class, 'users']);
+
+    Route::get('/creators', [AdminController::class, 'creators']);
+
+    Route::get('/posts', [AdminController::class, 'posts']);
+
+    Route::get('/settings', [AdminController::class, 'settings']);
+
+    Route::post('/featurepost/{post}', [AdminController::class, 'setPostFeature']);
+
 });
