@@ -1,6 +1,8 @@
 <x-home-layout>
 
-    <x-feature-post :featuredPost=$featuredPost />
+    @if ($featuredPost)
+        <x-feature-post :featuredPost=$featuredPost />
+    @endif
     
     <div class="flex flex-col lg:flex-row gap-12">
                 <div class="lg:w-2/3">

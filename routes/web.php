@@ -29,7 +29,6 @@ Route::get('/blogs', [PostsController::class, 'allBlogs']);
 Route::get('/blog/{posts}', [PostsController::class, 'show']);
 
 Route::get('/tags/{tags:name}', [TagsController::class, 'posts']);
-Route::get('/category/{categories:name}', CategoryController::class);
 
 
 Route::get('/search', SearchController::class);
@@ -117,5 +116,16 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/settings', [AdminController::class, 'settings']);
 
     Route::post('/featurepost/{post}', [AdminController::class, 'setPostFeature']);
+
+    Route::controller(AdminController::class)->group(function(){
+        Route::get('/category', 'categories');
+    });
+
+    Route::controller(CategoryController::class)->group(function(){
+        Route::post('/category', 'store');
+        Route::get('/category/{categories}/edit', 'edit');
+        Route::patch('/category/{categories}/update', 'update');
+        Route::delete('/category/{categories}/delete', 'destroy');
+    });
 
 });

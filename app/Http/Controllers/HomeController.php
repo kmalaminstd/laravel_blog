@@ -16,7 +16,7 @@ class HomeController extends Controller
 
         $featuredPost = Posts::where('featured', true)
             ->with(['category', 'user'])
-            ->get();
+            ->first();
         
         $latestPosts = Posts::where('published', true)
             ->latest()
@@ -33,7 +33,7 @@ class HomeController extends Controller
             ->get();
 
         return view('home', [
-            'featuredPost' => $featuredPost[0],
+            'featuredPost' => $featuredPost,
             'latestPosts' => $latestPosts,
             'categories' => $categories,
             'tags' => $tags,

@@ -7,13 +7,38 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function __invoke(Categories $categories) {
-        $posts = $categories->posts()
-            ->where('published', true)
-            ->with('user')
-            ->paginate(5)
-            ->withQueryString();
+    
+    public function store(Request $request){
 
-        return view('blogs.result', ["posts" => $posts]);
+        $validated = $request->validate([
+            'name' => 'required'
+        ]);
+
+        Categories::create($validated);
+
+        return redirect('/admin/category');
+
     }
+
+    public function edit(Categories $categories){
+        return view('admin.category-edit', compact('categories'));
+    }
+
+    public function update(Categories $categories, Request $request){
+
+        $validated = $request->validate([
+            'name' => 'required'
+        ]);
+
+        $categories->update($validated);
+
+        return redirect('/admin/category');
+
+    }
+
+    public function destroy(Categories $categories){
+        $categories->delete();
+        return back(); 
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Posts;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,6 +47,15 @@ class AdminController extends Controller
         }
 
         return back();
+    }
+
+    public function categories(){
+
+
+        $categories = Categories::latest()->get();
+
+        return view('admin.category', compact('categories'));
+
     }
 
 

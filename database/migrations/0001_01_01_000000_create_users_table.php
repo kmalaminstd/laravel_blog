@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('designation')->nullable();
             $table->string('logo')->nullable();
             $table->tinyText('bio')->nullable();
+            $table->enum('role', ['user', 'admin'])->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -27,6 +27,9 @@
             <a href="/admin/posts" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl font-bold transition">
                 <i class="fa-solid fa-file-lines"></i> Posts
             </a>
+            <a href="/admin/category" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl font-bold transition">
+                <i class="fa-solid fa-file-lines"></i> Categories
+            </a>
             <a href="/admin/users" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-xl font-bold transition">
                 <i class="fa-solid fa-user"></i> Users
             </a>
