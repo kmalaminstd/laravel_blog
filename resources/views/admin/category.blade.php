@@ -35,7 +35,7 @@
 
                 <div class="flex items-center justify-end gap-3 mt-10 pt-6 border-t border-slate-100">
                     <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-blue-700 shadow-lg shadow-blue-100 transition active:scale-95">
-                        Add Account
+                        Add Category
                     </button>
                 </div>
             </form>

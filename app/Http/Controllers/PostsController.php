@@ -99,6 +99,8 @@ class PostsController extends Controller
 
         $categories = Categories::all();
 
+        // dd($categories);
+
         return view('manager.new-post', ["categories" => $categories]);
     }
 

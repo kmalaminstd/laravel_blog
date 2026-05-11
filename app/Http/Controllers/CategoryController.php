@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    
+
+
     public function store(Request $request){
 
         $validated = $request->validate([
@@ -19,6 +20,8 @@ class CategoryController extends Controller
         return redirect('/admin/category');
 
     }
+
+    
 
     public function edit(Categories $categories){
         return view('admin.category-edit', compact('categories'));

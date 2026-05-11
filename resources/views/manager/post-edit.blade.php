@@ -9,7 +9,7 @@
             
         </div>
 
-        <form id="blogEditForm" class="p-8 space-y-8" method="POST" action="/posts/{{ $post['id'] }}" enctype="multipart/form-data">
+        <form id="blogEditForm" class="p-8 space-y-8 post_form" method="POST" action="/posts/{{ $post['id'] }}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="flex gap-3">
@@ -59,10 +59,14 @@
                 <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Post
                     Content</label>
                 <div class="border border-gray-200 rounded-2xl overflow-hidden">
-                    <textarea name="description" id="joditorjs2" rows="12" class="w-full editorjs2 p-6 text-gray-700 leading-relaxed outline-none resize-y" placeholder="Start writing your story...">
-                        {{ $post->description }}
-                    </textarea>
+                    <div id="quillEditor" 
+                        rows="12" 
+                        class="w-full p-6 text-gray-700 outline-none resize-y" 
+                        placeholder="Start writing your story..."
+                    > {!! old('description', $post->description) !!}</div>
                 </div>
+                <!-- Hidden Input -->
+                <input type="hidden" name="description" id="description">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,5 +1,5 @@
 <x-manage-layout>
-    <form class="new_post_form" action="/manage/create-post" method="post" enctype="multipart/form-data">
+    <form class="post_form" action="/manage/create-post" method="post" enctype="multipart/form-data">
         @csrf
 
         @if ($errors->any())
@@ -27,8 +27,9 @@
                 <div class="flex flex-wrap gap-4">
                     <select name="categories_id" class="bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg text-sm">
                         <option>Select Category</option>
+                        {{-- {{ dd($categories) }} --}}
                         @foreach ($categories as $category)
-                            <option value={{ $category->id }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                     <input type="text" name="tags" placeholder="Add tags (e.g. #js, #web)" class="bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg text-sm flex-1">
@@ -42,7 +43,9 @@
                     </label>
                 </div>
     
-                <textarea name="description" id="editorjs" placeholder="Tell your story..." class="editorjs hidden_input w-full min-h-[400px] outline-none text-lg leading-relaxed text-gray-700 resize-none"></textarea>
+                <div id="quillEditor" placeholder="Tell your story..." class="w-full min-h-[400px] outline-none text-lg leading-relaxed text-gray-700 resize-none"> {!! old('description') !!}</div>
+                <!-- Hidden Input -->
+                <input type="hidden" name="description" id="description">
             </div>
         </div>
     </form>

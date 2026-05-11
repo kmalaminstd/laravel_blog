@@ -6,6 +6,7 @@
     <title>BlogHub | Discover Stories</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
 </head>
 <body class="bg-slate-50 flex min-h-screen font-sans antialiased text-slate-900">
 
@@ -62,6 +63,7 @@
         
     </main>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 </html>
