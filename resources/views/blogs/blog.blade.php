@@ -95,7 +95,7 @@
 
                 @auth
                     <div class="flex gap-4 mb-10">
-                        <img src="{{ $post->user->logo ? asset('/storage' . $post->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
+                        <img src="{{ $post->user->logo ? asset('/storage/' . $post->user->logo) : asset('images/user.png') }}" class="w-10 h-10 rounded-full shrink-0">
                         <div class="flex-1">
                             <form method="post" action="/manage/comments/{{ $post->id }}">
                                 @csrf
