@@ -24,7 +24,7 @@
                         <h3 class="text-lg font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-3">Categories</h3>
                         <div class="space-y-2">
                             @foreach ($categories as $category)
-                                <a href="/category/{{ strtolower($category->name) }}" class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 hover:border-blue-300 transition group">
+                                <a href="/posts-category/{{ strtolower($category->name) }}" class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 hover:border-blue-300 transition group">
                                 <span class="text-gray-700 group-hover:text-blue-600">
                                     {{ $category->name }}
                                 </span>

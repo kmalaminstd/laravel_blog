@@ -21,7 +21,16 @@ class CategoryController extends Controller
 
     }
 
-    
+    public function categoryPost(Categories $categories){
+        // dd($categories);
+        $posts = $categories->posts()
+            ->where('published', true)
+            ->with('user')
+            ->paginate(5)
+            ->withQueryString();
+
+        return view('blogs.result', ["posts" => $posts]);
+    }    
 
     public function edit(Categories $categories){
         return view('admin.category-edit', compact('categories'));

@@ -44,6 +44,10 @@ Route::post('/newsletter/unsubscibe/{newsletter:unsubscribe_token}', [NewsLetter
 // creators controller
 Route::get('/creators', [CreatorController::class, 'index']);
 
+Route::controller(CategoryController::class)->group(function(){
+    Route::get('/posts-category/{categories:name}', 'categoryPost');
+});
+
 Route::get('/test-email', function(){
     //  Mail::send('alaminkhanstd@gmail')->queue(new Test());
 

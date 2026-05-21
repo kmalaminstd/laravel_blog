@@ -54,6 +54,8 @@ class PostsController extends Controller
         );
     }
 
+    
+
     public function allBlogs () {
         
         $query = Posts::where('published', true)
